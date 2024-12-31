@@ -16,6 +16,7 @@ class RepositoryImpl extends Repository {
   @override
   Future<Either<Failure, Authentication>> login(
       LoginRequest loginRequest) async {
+
     if (await _networkInfo.isConnected) {
       // its safe to call the API
       try {

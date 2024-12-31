@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+import '../../app/di.dart';
 import '../resources/assets_manager.dart';
 import '../resources/color_manager.dart';
 import '../resources/routes_manager.dart';
@@ -16,7 +17,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  LoginViewModel _viewModel = LoginViewModel(null); // todo pass here login useCase
+  LoginViewModel _viewModel = instance<LoginViewModel>();
+
   TextEditingController _userNameController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -93,8 +95,8 @@ class _LoginViewState extends State<LoginView> {
                       );
                     },
                   ),),
-                SizedBox(height: AppSize.s28),
-                Padding(padding: EdgeInsets.only(
+                const SizedBox(height: AppSize.s28),
+                Padding(padding: const EdgeInsets.only(
                     left: AppPadding.p28, right: AppPadding.p28),
                     child: StreamBuilder<bool>(
                     stream: _viewModel.outputIsAllInputsValid
@@ -114,7 +116,7 @@ class _LoginViewState extends State<LoginView> {
                     )
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     top: AppPadding.p8,
                     left: AppPadding.p28,
                     right: AppPadding.p28,
