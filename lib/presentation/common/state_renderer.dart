@@ -63,7 +63,7 @@ class StateRenderer extends StatelessWidget {
         ]);
 
       case StateRendererType.CONTENT_SCREEN_STATE:
-      // TODO: Handle this case.
+       // TODO: Handle this case.
         break;
       case StateRendererType.EMPTY_SCREEN_STATE:
         return _getItemsInColumn([_getAnimatedImage(JsonAssets.empty), _getMessage(message)]);

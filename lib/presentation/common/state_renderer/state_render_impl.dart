@@ -37,8 +37,7 @@ class ContentState extends FlowState {
   @override
   String getMessage() => EMPTY;
   @override
-  StateRendererType getStateRendererType() =>
-      StateRendererType.CONTENT_SCREEN_STATE;
+  StateRendererType getStateRendererType() => StateRendererType.CONTENT_SCREEN_STATE;
 }
 
 // EMPTY STATE

@@ -3,6 +3,8 @@ import 'dart:async';
 import '../../domain/usecase/login_usecase.dart';
 import '../base/baseviewmodel.dart';
 import '../common/freezed_data_classes.dart';
+import '../common/state_renderer.dart';
+import '../common/state_renderer/state_render_impl.dart';
 
 class LoginViewModel extends BaseViewModel
     implements LoginViewModelInputs, LoginViewModelOutputs {
@@ -28,7 +30,7 @@ class LoginViewModel extends BaseViewModel
 
   @override
   void start() {
-    // TODO: implement start
+    inputState.add(ContentState());
   }
   @override
   Sink get inputPassword => _passwordStreamController.sink;
@@ -37,16 +39,17 @@ class LoginViewModel extends BaseViewModel
   Sink get inputUserName => _userNameStreamController.sink;
   @override
   login() async {
+    inputState.add(
+        LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
     (await _loginUseCase.execute(
         LoginUseCaseInput(loginObject.userName, loginObject.password)))
         .fold(
             (failure) => {
-          // left -> failure
-          print(failure.message)
+              inputState.add(ErrorState(StateRendererType.POPUP_ERROR_STATE, failure.message))
         },
             (data) => {
-          // right -> success (data)
-          print(data.customer?.name)
+             // right -> success (data)
+              inputState.add(ContentState())
         });
   }
 
