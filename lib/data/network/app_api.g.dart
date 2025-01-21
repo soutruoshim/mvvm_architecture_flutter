@@ -36,6 +36,56 @@ class _AppServiceClient implements AppServiceClient {
       'imei': imei,
       'deviceType': deviceType,
     };
+    Logger().d("before request");
+    try {
+      final response = await _dio.fetch(
+        Options(
+          method: 'POST',
+          headers: _headers,
+          extra: _extra,
+          responseType: ResponseType.json, // Expect JSON
+        ).compose(
+          _dio.options,
+          '/customers/login',
+          queryParameters: queryParameters,
+          data: _data,
+        ).copyWith(
+          baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl),
+        ),
+      );
+      if (response.data is String) {
+        print("Plain text response: ${response.data}");
+      } else if (response.data is Map<String, dynamic>) {
+        print("JSON response: ${response.data}");
+      }
+
+    } catch (e) {
+      print("Error: $e");
+    }
+    try{
+      final _result = await _dio.fetch<Map<String, dynamic>>(
+          _setStreamType<AuthenticationResponse>(Options(
+            method: 'POST',
+            headers: _headers,
+            extra: _extra,
+            responseType: ResponseType.json
+          )
+              .compose(
+            _dio.options,
+            '/customers/login',
+            queryParameters: queryParameters,
+            data: _data,
+          )
+              .copyWith(
+              baseUrl: _combineBaseUrls(
+                _dio.options.baseUrl,
+                baseUrl,
+              ))));
+      Logger().d("end request");
+      Logger().d(_result.data!);
+    }catch(e){
+      Logger().d(e);
+    }
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<AuthenticationResponse>(Options(
       method: 'POST',
@@ -53,6 +103,8 @@ class _AppServiceClient implements AppServiceClient {
               _dio.options.baseUrl,
               baseUrl,
             ))));
+    Logger().d("end request");
+    Logger().d(_result.data!);
     final value = AuthenticationResponse.fromJson(_result.data!);
     return value;
   }

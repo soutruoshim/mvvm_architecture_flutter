@@ -21,7 +21,7 @@ class DioFactory {
     Map<String, String> headers = {
       CONTENT_TYPE: APPLICATION_JSON,
       ACCEPT: APPLICATION_JSON,
-      AUTHORIZATION: Constant.token,
+      //AUTHORIZATION: Constant.token,
       DEFAULT_LANGUAGE: language // todo get lang from app prefs
     };
     dio.options = BaseOptions(
@@ -33,8 +33,28 @@ class DioFactory {
     if (kReleaseMode) {
       print("release mode no logs");
     } else {
-      dio.interceptors.add(PrettyDioLogger(
-          requestHeader: true, requestBody: true, responseHeader: true));
+      // dio.interceptors.add(PrettyDioLogger(
+      //     requestHeader: true, requestBody: true, responseHeader: true));
+      dio.interceptors.add(
+        InterceptorsWrapper(
+          onRequest: (options, handler) {
+            print("REQUEST[${options.method}] => PATH: ${options.path}");
+            print("Headers: ${options.headers}");
+            print("Data: ${options.data}");
+            print("Query Parameters: ${options.queryParameters}");
+            handler.next(options); // Continue the request
+          },
+          onResponse: (response, handler) {
+            print("RESPONSE[${response.statusCode}] => DATA: ${response.data}");
+            handler.next(response); // Continue the response
+          },
+          onError: (DioError error, handler) {
+            print("ERROR[${error.response?.statusCode}] => MESSAGE: ${error.message}");
+            print("ERROR RESPONSE: ${error.response?.data}");
+            handler.next(error); // Continue error handling
+          },
+        ),
+      );
     }
 
     return dio;
