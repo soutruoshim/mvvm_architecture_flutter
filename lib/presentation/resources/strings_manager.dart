@@ -19,4 +19,8 @@ class AppStrings {
   static const String loading = "Loading...";
   static const String retry_again = "Retry Again";
   static const String ok = "Ok";
+  static const String emailHint = 'Email';
+  static const String invalidEmail = "Invalid Email";
+  static const String resetPassword = "Reset Password";
+  static const String success = "Success";
 }
