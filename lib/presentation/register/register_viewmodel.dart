@@ -3,6 +3,7 @@ import 'dart:io';
 import '../../app/functions.dart';
 import '../../domain/usecase/register_usecase.dart';
 import '../base/baseviewmodel.dart';
+import '../common/freezed_data_classes.dart';
 
 class RegisterViewModel extends BaseViewModel
     implements RegisterViewModelInput, RegisterViewModelOutput {
@@ -21,6 +22,8 @@ class RegisterViewModel extends BaseViewModel
 
   RegisterUseCase _registerUseCase;
   RegisterViewModel(this._registerUseCase);
+
+  var registerViewObject = RegisterObject("", "", "", "", "");
 
   @override
   void start() {
