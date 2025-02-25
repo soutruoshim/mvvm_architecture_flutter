@@ -165,10 +165,6 @@ class RegisterViewModel extends BaseViewModel
       .map((isPasswordValid) => isPasswordValid ? null : "Invalid Password");
 
   @override
-  Stream<File> get outputIsProfilePictureValid =>
-      _profilePictureStreamController.stream.map((file) => file);
-
-  @override
   register() async {
       inputState.add(
           LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
@@ -214,6 +210,11 @@ class RegisterViewModel extends BaseViewModel
   _validate() {
     inputAllInputsValid.add(null);
   }
+
+  @override
+  Stream<File?> get outputIsProfilePictureValid => _profilePictureStreamController.stream.map((file) => file);
+
+
 }
 
 abstract class RegisterViewModelInput {
@@ -246,6 +247,6 @@ abstract class RegisterViewModelOutput {
   Stream<bool> get outputIsPasswordValid;
   Stream<String?> get outputErrorPassword;
 
-  Stream<File> get outputIsProfilePictureValid;
+  Stream<File?> get outputIsProfilePictureValid;
   Stream<bool> get outputIsAllInputsValid;
 }

@@ -51,6 +51,8 @@ dependencies:
   lottie: ^1.2.1
   json_annotation: ^4.9.0
   dart_style: ^2.3.3
+  country_code_picker: ^2.0.2
+  image_picker: ^0.8.4+4
 
 dev_dependencies:
   flutter_test:
@@ -81,6 +83,7 @@ flutter:
     - assets/images/left_arrow_ic.svg
     - assets/images/right_arrow_ic.svg
     - assets/images/solid_circle_ic.svg
+    - assets/images/photo_camera_ic.svg
     - assets/images/login_ic.svg
     - assets/json/loading.json
     - assets/json/error.json
