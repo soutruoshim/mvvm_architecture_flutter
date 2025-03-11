@@ -22,6 +22,9 @@ class RegisterViewModel extends BaseViewModel
   StreamController _isAllInputsValidStreamController =
   StreamController<void>.broadcast();
 
+  StreamController isUserLoggedInSuccessfullyStreamController =
+  StreamController<bool>();
+
   RegisterUseCase _registerUseCase;
   RegisterViewModel(this._registerUseCase);
 
@@ -37,20 +40,23 @@ class RegisterViewModel extends BaseViewModel
       // reset countryCode value in register view object
       registerViewObject = registerViewObject.copyWith(countryMobileCode: "");
     }
+    _validate();
   }
   @override
   setEmail(String email) {
     if (isEmailValid(email)) {
       // update register view object with email value
       registerViewObject = registerViewObject.copyWith(
-          mobileNumber: email); // using data class like kotlin
+          email: email); // using data class like kotlin
     } else {
       // reset email value in register view object
       registerViewObject = registerViewObject.copyWith(email: "");
     }
+    _validate();
   }
   @override
   setMobileNumber(String mobileNumber) {
+    inputMobileNumber.add(mobileNumber);
     if (_isMobileNumberValid(mobileNumber)) {
       // update register view object with mobileNumber value
       registerViewObject = registerViewObject.copyWith(
@@ -59,9 +65,11 @@ class RegisterViewModel extends BaseViewModel
       // reset mobileNumber value in register view object
       registerViewObject = registerViewObject.copyWith(mobileNumber: "");
     }
+    _validate();
   }
   @override
   setPassword(String password) {
+    inputUPassword.add(password);
     if (_isPasswordValid(password)) {
       // update register view object with password value
       registerViewObject = registerViewObject.copyWith(
@@ -70,9 +78,11 @@ class RegisterViewModel extends BaseViewModel
       // reset password value in register view object
       registerViewObject = registerViewObject.copyWith(password: "");
     }
+    _validate();
   }
   @override
   setProfilePicture(File file) {
+    inputProfilePicture.add(file);
     if (file.path.isNotEmpty) {
       // update register view object with profilePicture value
       registerViewObject = registerViewObject.copyWith(
@@ -81,9 +91,11 @@ class RegisterViewModel extends BaseViewModel
       // reset profilePicture value in register view object
       registerViewObject = registerViewObject.copyWith(profilePicture: "");
     }
+    _validate();
   }
   @override
   setUserName(String userName) {
+    inputUserName.add(userName);
     if (_isUserNameValid(userName)) {
       // update register view object with username value
       registerViewObject = registerViewObject.copyWith(
@@ -92,18 +104,17 @@ class RegisterViewModel extends BaseViewModel
       // reset username value in register view object
       registerViewObject = registerViewObject.copyWith(userName: "");
     }
+    _validate();
   }
 
   @override
   Sink get inputAllInputsValid => _isAllInputsValidStreamController.sink;
 
   @override
-  Stream<bool> get outputIsAllInputsValid =>
-      _isAllInputsValidStreamController.stream.map((_) => _validateAllInputs());
+  Stream<bool> get outputIsAllInputsValid => _isAllInputsValidStreamController.stream.map((_) => _validateAllInputs());
 
   @override
   void start() {
-    // TODO: implement start
     inputState.add(ContentState());
   }
   @override
@@ -114,6 +125,7 @@ class RegisterViewModel extends BaseViewModel
     _emailStreamController.close();
     _passwordStreamController.close();
     _profilePictureStreamController.close();
+    isUserLoggedInSuccessfullyStreamController.close();
     super.dispose();
   }
 
@@ -168,23 +180,24 @@ class RegisterViewModel extends BaseViewModel
   register() async {
       inputState.add(
           LoadingState(stateRendererType: StateRendererType.POPUP_LOADING_STATE));
-      (await _registerUseCase.execute(RegisterUseCaseInput(
-      registerViewObject.mobileNumber,
-      registerViewObject.countryMobileCode,
-      registerViewObject.userName,
-      registerViewObject.email,
-          registerViewObject.password,
-          registerViewObject.profilePicture,
-      )))
+        (await _registerUseCase.execute(RegisterUseCaseInput(
+          registerViewObject.mobileNumber,
+          registerViewObject.countryMobileCode,
+          registerViewObject.userName,
+          registerViewObject.email,
+              registerViewObject.password,
+              registerViewObject.profilePicture,
+        )))
           .fold(
       (failure) => {
       // left -> failure
       inputState.add(ErrorState(
       StateRendererType.POPUP_ERROR_STATE, failure.message))
       }, (data) {
-      // right -> success (data)
-      inputState.add(ContentState());
-      // navigate to main screen after the login
+        // right -> success (data)
+        inputState.add(ContentState());
+        // navigate to main screen after the login
+        isUserLoggedInSuccessfullyStreamController.add(true);
       });
   }
 
@@ -200,13 +213,14 @@ class RegisterViewModel extends BaseViewModel
   }
 
   bool _validateAllInputs() {
-    return registerViewObject.profilePicture.isNotEmpty &&
-        registerViewObject.email.isNotEmpty &&
+    return registerViewObject.email.isNotEmpty &&
         registerViewObject.password.isNotEmpty &&
         registerViewObject.mobileNumber.isNotEmpty &&
         registerViewObject.userName.isNotEmpty &&
         registerViewObject.countryMobileCode.isNotEmpty;
   }
+
+
   _validate() {
     inputAllInputsValid.add(null);
   }
@@ -234,6 +248,7 @@ abstract class RegisterViewModelInput {
   Sink get inputAllInputsValid;
 
 }
+
 abstract class RegisterViewModelOutput {
   Stream<bool> get outputIsUserNameValid;
   Stream<String?> get outputErrorUserName;
