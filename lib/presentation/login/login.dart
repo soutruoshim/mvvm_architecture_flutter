@@ -79,7 +79,7 @@ class _LoginViewState extends State<LoginView> {
             key: _formKey,
             child: Column(
               children: [
-                //Image(image: AssetImage(ImageAssets.splashLogo)),
+                Image(image: AssetImage(ImageAssets.splashLogo)),
                 SizedBox(height: AppSize.s28),
                 Padding(padding: EdgeInsets.only(
                     left: AppPadding.p28, right: AppPadding.p28),

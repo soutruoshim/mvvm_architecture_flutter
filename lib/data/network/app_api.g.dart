@@ -102,9 +102,8 @@ class _AppServiceClient implements AppServiceClient {
       'email': email,
       'password': password,
       'mobile_number': mobilNumber,
-      'profile_picture': profilePicture??"",
+      'profile_picture': profilePicture,
     };
-
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<AuthenticationResponse>(Options(
       method: 'POST',
