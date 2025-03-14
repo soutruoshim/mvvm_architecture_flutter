@@ -9,10 +9,12 @@ import '../data/network/network_info.dart';
 import '../data/repository/repository_impl.dart';
 import '../domain/repository/repository.dart';
 import '../domain/usecase/forgot_password_usecase.dart';
+import '../domain/usecase/home_usecase.dart';
 import '../domain/usecase/login_usecase.dart';
 import '../domain/usecase/register_usecase.dart';
 import '../presentation/forgot_password/ForgotPasswordViewModel.dart';
 import '../presentation/login/login_viewmodel.dart';
+import '../presentation/main/home/home_viewmodel.dart';
 import '../presentation/register/register_viewmodel.dart';
 import 'app_prefs.dart';
 final instance = GetIt.instance;
@@ -59,5 +61,12 @@ initRegisterModule() {
     instance.registerFactory<RegisterViewModel>(
             () => RegisterViewModel(instance()));
     instance.registerFactory<ImagePicker>(() => ImagePicker());
+  }
+}
+
+initHomeModule() {
+  if (!GetIt.I.isRegistered<HomeUseCase>()) {
+    instance.registerFactory<HomeUseCase>(() => HomeUseCase(instance()));
+    instance.registerFactory<HomeViewModel>(() => HomeViewModel(instance()));
   }
 }
