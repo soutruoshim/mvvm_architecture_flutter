@@ -2,6 +2,7 @@ import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../data/data_source/local_data_source.dart';
 import '../data/data_source/remote_data_source.dart';
 import '../data/network/app_api.dart';
 import '../data/network/dio_factory.dart';
@@ -12,10 +13,12 @@ import '../domain/usecase/forgot_password_usecase.dart';
 import '../domain/usecase/home_usecase.dart';
 import '../domain/usecase/login_usecase.dart';
 import '../domain/usecase/register_usecase.dart';
+import '../domain/usecase/store_details_usecase.dart';
 import '../presentation/forgot_password/ForgotPasswordViewModel.dart';
 import '../presentation/login/login_viewmodel.dart';
 import '../presentation/main/home/home_viewmodel.dart';
 import '../presentation/register/register_viewmodel.dart';
+import '../presentation/store_details/store_details_viewmodel.dart';
 import 'app_prefs.dart';
 final instance = GetIt.instance;
 Future<void> initAppModule() async {
@@ -34,9 +37,14 @@ Future<void> initAppModule() async {
   // remote data source
   instance.registerLazySingleton<RemoteDataSource>(
           () => RemoteDataSourceImplementer(instance()));
+
+  // local data source
+  instance.registerLazySingleton<LocalDataSource>(
+          () => LocalDataSourceImplementer());
+
   // repository
   instance.registerLazySingleton<Repository>(
-          () => RepositoryImpl(instance(), instance()));
+          () => RepositoryImpl(instance(), instance(), instance()));
 }
 initLoginModule(){
   if(!GetIt.I.isRegistered<LoginUseCase>()){
@@ -68,5 +76,13 @@ initHomeModule() {
   if (!GetIt.I.isRegistered<HomeUseCase>()) {
     instance.registerFactory<HomeUseCase>(() => HomeUseCase(instance()));
     instance.registerFactory<HomeViewModel>(() => HomeViewModel(instance()));
+  }
+}
+initStoreDetailsModule() {
+  if (!GetIt.I.isRegistered<StoreDetailsUseCase>()) {
+    instance.registerFactory<StoreDetailsUseCase>(
+            () => StoreDetailsUseCase(instance()));
+    instance.registerFactory<StoreDetailsViewModel>(
+            () => StoreDetailsViewModel(instance()));
   }
 }

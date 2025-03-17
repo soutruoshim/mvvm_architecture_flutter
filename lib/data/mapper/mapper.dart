@@ -1,6 +1,7 @@
 import 'package:mvvm_architecture/app/extensions.dart';
 
 import '../../domain/model/model.dart';
+import '../../presentation/domain/model.dart';
 import '../responses/responses.dart';
 
 const EMPTY = "";
@@ -67,12 +68,24 @@ extension HomeResponseMapper on HomeResponse? {
         .toList();
 
     List<BannerAd> mappedBanners =
-    (this?.data?.stores?.map((bannerAd) => bannerAd.toDomain()) ??
+    (this?.data?.banners?.map((bannerAd) => bannerAd.toDomain()) ??
         Iterable.empty())
         .cast<BannerAd>()
         .toList();
 
     var data = HomeData(mappedServices, mappedStores, mappedBanners);
     return HomeObject(data);
+  }
+}
+
+extension StoreDetailsResponseMapper on StoreDetailsResponse? {
+  StoreDetails toDomain() {
+    return StoreDetails(
+        this?.id?.orZero() ?? ZERO,
+        this?.title?.orEmpty() ?? EMPTY,
+        this?.image?.orEmpty() ?? EMPTY,
+        this?.details?.orEmpty() ?? EMPTY,
+        this?.services?.orEmpty() ?? EMPTY,
+        this?.about?.orEmpty() ?? EMPTY);
   }
 }
