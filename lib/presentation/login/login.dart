@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_svg/svg.dart';
@@ -90,8 +91,8 @@ class _LoginViewState extends State<LoginView> {
                         keyboardType: TextInputType.emailAddress,
                         controller: _userNameController,
                         decoration: InputDecoration(
-                            hintText: AppStrings.username,
-                            labelText: AppStrings.username,
+                            hintText: AppStrings.username.tr(),
+                            labelText: AppStrings.username.tr(),
                             errorText: (snapshot.data ?? true)
                                 ? null
                                 : AppStrings.usernameError
@@ -109,11 +110,11 @@ class _LoginViewState extends State<LoginView> {
                         keyboardType: TextInputType.visiblePassword,
                         controller: _passwordController,
                         decoration: InputDecoration(
-                            hintText: AppStrings.password,
-                            labelText: AppStrings.password,
+                            hintText: AppStrings.password.tr(),
+                            labelText: AppStrings.password.tr(),
                             errorText: (snapshot.data ?? true)
                                 ? null
-                                : AppStrings.passwordError
+                                : AppStrings.passwordError.tr()
                         ),
                       );
                     },
@@ -153,7 +154,7 @@ class _LoginViewState extends State<LoginView> {
                               context, Routes.forgotPasswordRoute);
                         },
                         child: Text(AppStrings.forgetPassword,
-                            style: Theme.of(context).textTheme.headlineMedium),
+                            style: Theme.of(context).textTheme.headlineMedium).tr(),
                       ),
                       TextButton(
                         onPressed: () {
@@ -161,7 +162,7 @@ class _LoginViewState extends State<LoginView> {
                               context, Routes.registerRoute);
                         },
                         child: Text(AppStrings.registerText,
-                            style: Theme.of(context).textTheme.headlineMedium),
+                            style: Theme.of(context).textTheme.headlineMedium).tr(),
                       )
                     ],
                   ),

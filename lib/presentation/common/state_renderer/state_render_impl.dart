@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 import '../../../data/mapper/mapper.dart';
 import '../../resources/strings_manager.dart';
 import '../state_renderer.dart';
@@ -13,7 +15,7 @@ class LoadingState extends FlowState {
   StateRendererType stateRendererType;
   String message;
   LoadingState({required this.stateRendererType, String? message})
-      : message = message ?? AppStrings.loading;
+      :message = message ?? AppStrings.loading.tr();
   @override
   String getMessage() => message;
   @override
@@ -85,7 +87,7 @@ extension FlowStateExtension on FlowState {
           // i should check if we are showing loading popup to remove it before showing success popup
           dismissDialog(context);
           // show popup
-          showPopUp(context, StateRendererType.POPUP_SUCCESS, getMessage(), title: AppStrings.success);
+          showPopUp(context, StateRendererType.POPUP_SUCCESS, getMessage(), title: AppStrings.success.tr());
           // return content ui of the screen
           return contentScreenWidget;
         }

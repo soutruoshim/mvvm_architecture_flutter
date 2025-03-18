@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mvvm_architecture/data/network/error_handler.dart';
 
 import '../../app/app_prefs.dart';
 import '../../app/di.dart';
@@ -28,7 +30,7 @@ class _SettingsPageState extends State<SettingsPage> {
           title: Text(
             AppStrings.changeLanguage,
             style: Theme.of(context).textTheme.headlineSmall,
-          ),
+          ).tr(),
           leading: SvgPicture.asset(ImageAssets.changeLangIc),
           trailing: SvgPicture.asset(ImageAssets.settingsRightArrowIc),
           onTap: () {
@@ -39,7 +41,7 @@ class _SettingsPageState extends State<SettingsPage> {
           title: Text(
             AppStrings.contactUs,
             style: Theme.of(context).textTheme.headlineSmall,
-          ),
+          ).tr(),
           leading: SvgPicture.asset(ImageAssets.contactUsIc),
           trailing: SvgPicture.asset(ImageAssets.settingsRightArrowIc),
           onTap: () {
@@ -50,7 +52,7 @@ class _SettingsPageState extends State<SettingsPage> {
           title: Text(
             AppStrings.inviteYourFriends,
             style: Theme.of(context).textTheme.headlineSmall,
-          ),
+          ).tr(),
           leading: SvgPicture.asset(ImageAssets.inviteFriendsIc),
           trailing: SvgPicture.asset(ImageAssets.settingsRightArrowIc),
           onTap: () {
@@ -61,7 +63,7 @@ class _SettingsPageState extends State<SettingsPage> {
           title: Text(
             AppStrings.logout,
             style: Theme.of(context).textTheme.headlineSmall,
-          ),
+          ).tr(),
           leading: SvgPicture.asset(ImageAssets.logoutIc),
           trailing: SvgPicture.asset(ImageAssets.settingsRightArrowIc),
           onTap: () {

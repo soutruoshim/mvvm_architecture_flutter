@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import '../resources/color_manager.dart';
 import '../resources/values_manager.dart';
@@ -22,13 +23,13 @@ class _MainViewState extends State<MainView> {
     SettingsPage()
   ];
   List<String> titles = [
-    AppStrings.home,
-    AppStrings.search,
-    AppStrings.notifications,
-    AppStrings.settings,
+    AppStrings.home.tr(),
+    AppStrings.search.tr(),
+    AppStrings.notifications.tr(),
+    AppStrings.settings.tr(),
   ];
 
-  var _title = AppStrings.home;
+  var _title = AppStrings.home.tr();
   var _currentIndex = 0;
 
   @override
@@ -54,10 +55,10 @@ class _MainViewState extends State<MainView> {
           currentIndex: _currentIndex,
           onTap: onTap,
           items: [
-            BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-            BottomNavigationBarItem(icon: Icon(Icons.search), label: "Search"),
-            BottomNavigationBarItem(icon: Icon(Icons.notifications), label: "Notification"),
-            BottomNavigationBarItem(icon: Icon(Icons.settings),label: "Setting"),
+            BottomNavigationBarItem(icon: Icon(Icons.home), label: AppStrings.home.tr()),
+            BottomNavigationBarItem(icon: Icon(Icons.search), label: AppStrings.search.tr()),
+            BottomNavigationBarItem(icon: Icon(Icons.notifications),label: AppStrings.notifications.tr()),
+            BottomNavigationBarItem(icon: Icon(Icons.settings),label: AppStrings.settings.tr()),
           ],
         ),
       ),

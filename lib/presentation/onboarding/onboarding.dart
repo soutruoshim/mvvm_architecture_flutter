@@ -1,6 +1,8 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:mvvm_architecture/presentation/common/state_renderer.dart';
 import '../../app/app_prefs.dart';
 import '../../app/di.dart';
 import '../domain/model.dart';
@@ -86,7 +88,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                           context, Routes.loginRoute);
                     },
                     child: Text(
-                      AppStrings.skip,
+                      AppStrings.skip.tr(),
                       style: Theme.of(context).textTheme.titleSmall,
                       textAlign: TextAlign.end,
                     ),

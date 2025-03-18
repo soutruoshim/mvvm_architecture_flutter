@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:mvvm_architecture/presentation/store_details/store_details_viewmodel.dart';
 
@@ -90,12 +91,12 @@ class _StoreDetailsViewState extends State<StoreDetailsView> {
                 width: double.infinity,
                 height: 250,
               )),
-          _getSection(AppStrings.details),
-          _getInfoText(storeDetails.details),
-          _getSection(AppStrings.services),
-          _getInfoText(storeDetails.services),
-          _getSection(AppStrings.about),
-          _getInfoText(storeDetails.about)
+          _getSection(AppStrings.details.tr()),
+          _getInfoText(storeDetails.details.tr()),
+          _getSection(AppStrings.services.tr()),
+          _getInfoText(storeDetails.services.tr()),
+          _getSection(AppStrings.about.tr()),
+          _getInfoText(storeDetails.about.tr())
         ],
       );
     } else {
